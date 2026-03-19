@@ -20,4 +20,8 @@ A simple login screen to learn about styling using react component's state chang
 
 Project `p1` used to learn React debugging.
 
+### `p5` "Almost" Final Countdown
+
+A project where one trains its own time tracking skills by stopping the timeout as nearly to the end as possible. Used to teach component composition
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
