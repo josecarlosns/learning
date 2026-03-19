@@ -42,4 +42,8 @@ A simple quiz with a timer that show questions answered correctly, incorrectly o
 
 > Ps: Added dummy data to make it a LOTR quiz hahaha
 
+## `p10` Elegant Context
+
+A simple shopping react app used to teach students how to use react Context and Context Providers.
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
