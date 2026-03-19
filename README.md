@@ -1,10 +1,10 @@
-# 📚 Learning
+# :books: Learning
 
 Here is my personal collection of projects built while following online courses, tutorials, and other learning resources. Each folder is a self-contained project with its own dependencies and configuration.
 
 ---
 
-## Table of Contents
+## :bookmark_tabs: Table of Contents
 
 <!-- toc -->
 
@@ -25,15 +25,15 @@ Here is my personal collection of projects built while following online courses,
 
 ---
 
-## Info
+## :heavy_exclamation_mark: Info
 
 - Each course, project and other relevant resources will have its own unique ID, like `p1`, `r5`, `c3` etc, and those will be used in commmit messages to identify which course->project->resource is being changed. Ex.: `COMMIT_MSG c2p11 added support to millionjs` indicates that project with id `p11` from course with id `c2` has support for [MillionJS](https://old.million.dev/) added. The `id` will be displayed on the heading of each course and its projects.
 
 ---
 
-## Courses
+## :mortar_board: Courses
 
-### `rc1` React Complete Guide
+###  `rc1` React Complete Guide
 
 ![status badge](https://img.shields.io/badge/status-inprogress-yellow)
 ![Javascript Badge](https://img.shields.io/badge/JS-gray?logo=javascript)![React Badge](https://img.shields.io/badge/React-gray?logo=react)![Redux Badge](https://img.shields.io/badge/Redux-gray?logo=redux)![Nextjs Badge](https://img.shields.io/badge/Next-gray?logo=next.js)![Node Badge](https://img.shields.io/badge/Node-gray?logo=node.js)![Vite Badge](https://img.shields.io/badge/Vite-gray?logo=vite)
@@ -46,7 +46,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## 🗂️ Folder Structure
+## :card_file_box: File tree Structure
 
 ```tree..
 └── react-complete-guide
@@ -67,7 +67,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## 📦 Projects
+## :file_folder: Folders
 
 | Folder                 | Course / Resource                 | Topic               | Last updated | Status         |
 | ---------------------- | --------------------------------- | ------------------- | ------------ | -------------- |
@@ -77,7 +77,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## 🚀 Running a Project
+## :rocket: Running a Project
 
 ### For `rc1` React Complete Course projects
 
@@ -94,7 +94,7 @@ npm run dev
 
 ---
 
-## 🛠️ Tech Stack
+## :hammer_and_wrench: Tech Stack
 
 Technologies covered across all projects in this repository:
 
@@ -109,7 +109,7 @@ TODO courses in these fields!!!
 
 ---
 
-## 📝 Notes
+## :pencil: Notes
 
 - Each project has its own `.gitignore` — `node_modules` and build folders are not tracked.
 - Projects are for **learning purposes only** and are not production-ready.
@@ -117,7 +117,7 @@ TODO courses in these fields!!!
 
 ---
 
-## 📖 Resources
+## :book: Resources
 
 - [Udemy](https://www.udemy.com)
 
