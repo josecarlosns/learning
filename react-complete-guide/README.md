@@ -24,4 +24,8 @@ Project `p1` used to learn React debugging.
 
 A project where one trains its own time tracking skills by stopping the timeout as nearly to the end as possible. Used to teach component composition
 
+### `p6` Place Picker
+
+A simple projects where one might select places they'd like to visit from a list of available places. Used in a module to teach useEffect hook.
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
