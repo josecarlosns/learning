@@ -3,13 +3,14 @@ import Places from './Places.jsx';
 import { BASE_URL } from '../data/constants.js';
 import { sleep } from '../utils/jsUtils.js';
 import ErrorPage from './ErrorPage.jsx';
+import { sortPlacesByDistance } from '../loc.js';
 
 async function fetchPlaces() {
   try {
     const response = await fetch(BASE_URL);
     const data = await response.json();
 
-    await sleep(2000); // fakke time to load
+    await sleep(2000); // fake time to load
 
     if (!response.ok) {
       throw new Error('Failed to fetch places');
@@ -28,8 +29,23 @@ export default function AvailablePlaces({ onSelectPlace }) {
 
   useEffect(() => {
     fetchPlaces()
-      .then((data) => {
-        setAvailablePlaces(data);
+      .then((places) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const {
+            coords: { latitude, longitude }
+          } = position;
+
+          const sortedPlaces = sortPlacesByDistance(
+            places,
+            latitude,
+            longitude
+          );
+
+          setAvailablePlaces(sortedPlaces);
+          setIsLoading(false);
+        });
+
+        setAvailablePlaces(places);
         setIsLoading(false);
       })
       .catch((error) => {
