@@ -4,15 +4,39 @@ Here is my personal collection of projects built while following online courses,
 
 ---
 
-## Details
+## Table of Contents
+
+<!-- toc -->
+
+- [📚 Learning](#-learning)
+  - [Table of Contents](#table-of-contents)
+  - [Info](#info)
+  - [Courses](#courses)
+    - [`rc1` React Complete Guide](#rc1-react-complete-guide)
+  - [🗂️ Project tree](#️-project-tree)
+  - [📦 Projects](#-projects)
+  - [🚀 Running a Project](#-running-a-project)
+  - [🛠️ Tech Stack](#️-tech-stack)
+  - [📝 Notes](#-notes)
+  - [📖 Resources](#-resources)
+
+<!-- tocstop -->
+
+---
+
+## Info
 
 - Each course, project and other relevant resources will have its own unique ID, like `p1`, `r5`, `c3` etc, and those will be used in commmit messages to identify which course->project->resource is being changed. Ex.: `COMMIT_MSG c2p11 added support to millionjs` indicates that project with id `p11` from course with id `c2` has support for [MillionJS](https://old.million.dev/) added. The `id` will be displayed on the heading of each course and its projects.
 
+---
+
 ## Courses
 
-## `rc1` React Complete Guide
+### `rc1` React Complete Guide
 
 ![status badge](https://img.shields.io/badge/status%3A%20-inprogress-yellow)
+
+![Static Badge](https://img.shields.io/badge/javascript-default)
 
 Complete React course, including React Hooks, Redux, Nextjs and more related tecnologies.
 
@@ -20,12 +44,25 @@ Hours: 71 hours total.
 
 Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
 
-## 🗂️ Project tree
+---
 
-```tree
-learning-projects/
-├── react-complete-guide/       # Udemy — React: The Complete Guide
-└── ...
+## 🗂️ Folder Structure
+
+```tree..
+└── react-complete-guide
+    ├── elegant-context
+    ├── final-countdown
+    ├── investment-calculator
+    ├── investment-calculator-debug
+    ├── place-picker
+    ├── project-manager
+    ├── project-quiz
+    ├── react-art
+    ├── react-behind-the-scenes
+    ├── react-essentials
+    └── tictactoe
+
+13 directories
 ```
 
 ---
@@ -46,7 +83,7 @@ Each project is independent. Navigate to the folder and follow its own instructi
 
 ```bash
 # Navigate to the project
-cd project-folder
+cd course-folder/project-folder
 
 # Install dependencies
 npm install
@@ -79,9 +116,7 @@ Technologies covered across all projects in this repository:
 ## 📖 Resources
 
 - [Udemy](https://www.udemy.com)
-- [Three.js Journey](https://threejs-journey.com)
-- [The Odin Project](https://www.theodinproject.com)
 
 ---
 
-> _Last Updated: 19/03/2026_
+> _Last Updated: 19/03/2026
