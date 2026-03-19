@@ -13,9 +13,10 @@ Here is my personal collection of projects built while following online courses,
   - [Info](#info)
   - [Courses](#courses)
     - [`rc1` React Complete Guide](#rc1-react-complete-guide)
-  - [🗂️ Project tree](#️-project-tree)
+  - [🗂️ Folder Structure](#️-folder-structure)
   - [📦 Projects](#-projects)
   - [🚀 Running a Project](#-running-a-project)
+    - [For `rc1` React Complete Course projects](#for-rc1-react-complete-course-projects)
   - [🛠️ Tech Stack](#️-tech-stack)
   - [📝 Notes](#-notes)
   - [📖 Resources](#-resources)
@@ -34,9 +35,8 @@ Here is my personal collection of projects built while following online courses,
 
 ### `rc1` React Complete Guide
 
-![status badge](https://img.shields.io/badge/status%3A%20-inprogress-yellow)
-
-![Static Badge](https://img.shields.io/badge/javascript-default)
+![status badge](https://img.shields.io/badge/status-inprogress-yellow)
+![Javascript Badge](https://img.shields.io/badge/JS-gray?logo=javascript)![React Badge](https://img.shields.io/badge/React-gray?logo=react)![Redux Badge](https://img.shields.io/badge/Redux-gray?logo=redux)![Nextjs Badge](https://img.shields.io/badge/Next-gray?logo=next.js)![Node Badge](https://img.shields.io/badge/Node-gray?logo=node.js)![Vite Badge](https://img.shields.io/badge/Vite-gray?logo=vite)
 
 Complete React course, including React Hooks, Redux, Nextjs and more related tecnologies.
 
@@ -79,14 +79,14 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ## 🚀 Running a Project
 
-Each project is independent. Navigate to the folder and follow its own instructions, but generally:
+### For `rc1` React Complete Course projects
 
 ```bash
 # Navigate to the project
-cd course-folder/project-folder
+cd react-complete-course/project-folder
 
 # Install dependencies
-npm install
+npm i
 
 # Start the dev server
 npm run dev
@@ -99,9 +99,13 @@ npm run dev
 Technologies covered across all projects in this repository:
 
 - **Frontend** — React, Vite, Tailwind CSS
+<!--
+TODO courses in these fields!!!
+
 - **Backend** — Node.js, Express
 - **Database** — MongoDB, PostgreSQL
 - **Tools** — Git, ESLint, Prettier
+- -->
 
 ---
 
@@ -119,4 +123,4 @@ Technologies covered across all projects in this repository:
 
 ---
 
-> _Last Updated: 19/03/2026
+> Last Updated: 19/03/2026
