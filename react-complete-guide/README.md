@@ -1,6 +1,10 @@
-# `rc1` React Complete Guide Course
+# `rc1` React Complete Guide
 
 Complete React course, including React Hooks, Redux, Nextjs and more related tecnologies.
+
+> Ps.: If the projects up to `p11` seem out of order its due to the fact I was using a anoter, private repository to learn the modules in which they are used. Only later I migrated them all to this repo.
+
+---
 
 ## List of Projects
 

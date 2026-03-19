@@ -4,6 +4,22 @@ Here is my personal collection of projects built while following online courses,
 
 ---
 
+## Details
+
+- Each course, project and other relevant resources will have its own unique ID, like `p1`, `r5`, `c3` etc, and those will be used in commmit messages to identify which course->project->resource is being changed. Ex.: `COMMIT_MSG c2p11 added support to millionjs` indicates that project with id `p11` from course with id `c2` has support for [MillionJS](https://old.million.dev/) added. The `id` will be displayed on the heading of each course and its projects.
+
+## Courses
+
+## `rc1` React Complete Guide
+
+![status badge](https://img.shields.io/badge/status%3A%20-inprogress-yellow)
+
+Complete React course, including React Hooks, Redux, Nextjs and more related tecnologies.
+
+Hours: 71 hours total.
+
+Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
+
 ## 🗂️ Project tree
 
 ```tree
