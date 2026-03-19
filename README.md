@@ -1,39 +1,39 @@
-# :books: Learning
+# 📚 Learning
 
 Here is my personal collection of projects built while following online courses, tutorials, and other learning resources. Each folder is a self-contained project with its own dependencies and configuration.
 
 ---
 
-## :bookmark_tabs: Table of Contents
+## 📑 Table of Contents
 
 <!-- toc -->
 
 - [📚 Learning](#-learning)
-  - [Table of Contents](#table-of-contents)
-  - [Info](#info)
-  - [Courses](#courses)
+  - [📑 Table of Contents](#-table-of-contents)
+  - [❗ Info](#-info)
+  - [🎓 Courses](#-courses)
     - [`rc1` React Complete Guide](#rc1-react-complete-guide)
-  - [🗂️ Folder Structure](#️-folder-structure)
-  - [📦 Projects](#-projects)
+  - [🗃️ File tree Structure](#️-file-tree-structure)
+  - [📁 Folders](#-folders)
   - [🚀 Running a Project](#-running-a-project)
     - [For `rc1` React Complete Course projects](#for-rc1-react-complete-course-projects)
   - [🛠️ Tech Stack](#️-tech-stack)
   - [📝 Notes](#-notes)
-  - [📖 Resources](#-resources)
+  - [🔗 Resources](#-resources)
 
 <!-- tocstop -->
 
 ---
 
-## :heavy_exclamation_mark: Info
+## ❗ Info
 
 - Each course, project and other relevant resources will have its own unique ID, like `p1`, `r5`, `c3` etc, and those will be used in commmit messages to identify which course->project->resource is being changed. Ex.: `COMMIT_MSG c2p11 added support to millionjs` indicates that project with id `p11` from course with id `c2` has support for [MillionJS](https://old.million.dev/) added. The `id` will be displayed on the heading of each course and its projects.
 
 ---
 
-## :mortar_board: Courses
+## 🎓 Courses
 
-###  `rc1` React Complete Guide
+### `rc1` React Complete Guide
 
 ![status badge](https://img.shields.io/badge/status-inprogress-yellow)
 ![Javascript Badge](https://img.shields.io/badge/JS-gray?logo=javascript)![React Badge](https://img.shields.io/badge/React-gray?logo=react)![Redux Badge](https://img.shields.io/badge/Redux-gray?logo=redux)![Nextjs Badge](https://img.shields.io/badge/Next-gray?logo=next.js)![Node Badge](https://img.shields.io/badge/Node-gray?logo=node.js)![Vite Badge](https://img.shields.io/badge/Vite-gray?logo=vite)
@@ -46,7 +46,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## :card_file_box: File tree Structure
+## 🗃️ File tree Structure
 
 ```tree..
 └── react-complete-guide
@@ -67,7 +67,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## :file_folder: Folders
+## 📁 Folders
 
 | Folder                 | Course / Resource                 | Topic               | Last updated | Status         |
 | ---------------------- | --------------------------------- | ------------------- | ------------ | -------------- |
@@ -77,7 +77,7 @@ Link: [https://www.udemy.com/course/react-the-complete-guide-incl-redux/](https:
 
 ---
 
-## :rocket: Running a Project
+## 🚀 Running a Project
 
 ### For `rc1` React Complete Course projects
 
@@ -94,13 +94,14 @@ npm run dev
 
 ---
 
-## :hammer_and_wrench: Tech Stack
+## 🛠️ Tech Stack
 
 Technologies covered across all projects in this repository:
 
 - **Frontend** — React, Vite, Tailwind CSS
 <!--
 TODO courses in these fields!!!
+
 
 - **Backend** — Node.js, Express
 - **Database** — MongoDB, PostgreSQL
@@ -109,7 +110,7 @@ TODO courses in these fields!!!
 
 ---
 
-## :pencil: Notes
+## 📝 Notes
 
 - Each project has its own `.gitignore` — `node_modules` and build folders are not tracked.
 - Projects are for **learning purposes only** and are not production-ready.
@@ -117,7 +118,7 @@ TODO courses in these fields!!!
 
 ---
 
-## :book: Resources
+## 🔗 Resources
 
 - [Udemy](https://www.udemy.com)
 
