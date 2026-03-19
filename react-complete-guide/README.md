@@ -32,4 +32,8 @@ A simple projects where one might select places they'd like to visit from a list
 
 A counter used to teach how React works from behind the scenes.
 
+### `p8` Project Manager
+
+A react app for managing projects and tasks, used as a practice project for students.
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
