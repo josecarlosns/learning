@@ -223,4 +223,13 @@ A simple quiz with a timer that show questions answered correctly, incorrectly o
 - **Modules:**
   - **#13** A Look Behind The Scenes Of React & Optimization Techniques
 
-A counter used to teach how React works from behind the scenes.
+---
+
+### `p12` Place Picker API
+
+![Static Badge](https://img.shields.io/badge/status-inprogress-yellow)
+
+- **Modules:**
+  - **#15** Sending Http Request (e.g. Connecting to a Database)
+
+Reusing the Place Picker project to learn how to consume APIs and render asynchronous components
