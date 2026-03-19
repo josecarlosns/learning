@@ -2,7 +2,9 @@
 
 Complete React course, including React Hooks, Redux, Nextjs and more related tecnologies.
 
-> Ps.: If the projects up to `p11` seem out of order its due to the fact I was using a anoter, private repository to learn the modules in which they are used. Only later I migrated them all to this repo.
+Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
+
+> Ps.: If the projects IDs seem out of order its due to the fact I was using a anoter, private repository to learn the modules in which they are used. Only later I migrated them all to this repo.
 
 ---
 
@@ -222,5 +224,3 @@ A simple quiz with a timer that show questions answered correctly, incorrectly o
   - **#13** A Look Behind The Scenes Of React & Optimization Techniques
 
 A counter used to teach how React works from behind the scenes.
-
-Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
