@@ -12,4 +12,8 @@ A calculator that receives data about investment plans and shows the resulting p
 
 A simple project for teaching the essential aspects of react. It shows some simple documentation about core concepts of react, like **Components**, **JSX** and **State**.
 
+### `p3` React Art
+
+A simple login screen to learn about styling using react component's state changes
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
