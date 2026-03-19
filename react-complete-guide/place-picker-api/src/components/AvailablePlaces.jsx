@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 import Places from './Places.jsx';
 import { BASE_URL } from '../data/constants.js';
 
+async function fetchPlaces() {
+  const response = await fetch(BASE_URL);
+  const data = await response.json();
+
+  return data.places;
+}
+
 export default function AvailablePlaces({ onSelectPlace }) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
   useEffect(() => {
-    fetch(BASE_URL)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setAvailablePlaces(data.places);
-      });
+    fetchPlaces().then((data) => {
+      setAvailablePlaces(data);
+    });
   }, []);
 
   return (
