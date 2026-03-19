@@ -28,4 +28,8 @@ A project where one trains its own time tracking skills by stopping the timeout 
 
 A simple projects where one might select places they'd like to visit from a list of available places. Used in a module to teach useEffect hook.
 
+### `p7` Counter: React Behind the Scenes
+
+A counter used to teach how React works from behind the scenes.
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
