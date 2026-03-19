@@ -36,4 +36,10 @@ A counter used to teach how React works from behind the scenes.
 
 A react app for managing projects and tasks, used as a practice project for students.
 
+## `p9` React Quiz
+
+A simple quiz with a timer that show questions answered correctly, incorrectly or skipped at the end, alongside a list of the questions and their answer states.
+
+> Ps: Added dummy data to make it a LOTR quiz hahaha
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
