@@ -16,4 +16,8 @@ A simple project for teaching the essential aspects of react. It shows some simp
 
 A simple login screen to learn about styling using react component's state changes
 
+### `p4` Investment Calculator for Debug
+
+Project `p1` used to learn React debugging.
+
 Link: [React The Complete Guide](https://www.udemy.com/course/react-the-complete-guide-incl-redux/)
