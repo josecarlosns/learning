@@ -29,16 +29,17 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
 
 ## 📦 List of Projects
 
-<!-- ### `p2` React Essentials
+### `p1` NodeJS Basics
 
-![Static Badge](https://img.shields.io/badge/status-completed-green)
+![Static Badge](https://img.shields.io/badge/status-skipped-orange)
 
 - **Modules:**
-  - **#3** React Essentials - Components, JSX, Props, State & More.
-  - **#4** React Essentials - Deep dive.
+  - **#3** Understanding the basics
 
-A simple project for teaching the essential aspects of react. It shows some simple documentation about core concepts of react, like **Components**, **JSX** and **State**.
+A simple project dedicated to learn the basics of NodeJS.
 
---- -->
+> After starting the module I decided to skip it, since I still had a good feeling of the basics.
 
-> TODO
+---
+
+> Last updated: 22/03/2026
