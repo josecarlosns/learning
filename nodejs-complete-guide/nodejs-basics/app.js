@@ -1,9 +1,11 @@
 const http = require('http');
 
-function rqListener(req, res) {
-  console.log('asdf');
-}
+const server = http.createServer((req, res) => {
+  console.log(req.url, req.method);
 
-const server = http.createServer(rqListener);
+  res.setHeader('Content-Type', 'text/html');
+  res.write('hello world');
+  res.end();
+});
 
 server.listen(3000);
