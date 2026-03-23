@@ -1,8 +1,9 @@
+const rootDir = process.cwd();
+
 import path from "path";
-import { fileURLToPath } from "url";
 
-// added this because __dirname and __filename are not available by default for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+function getPath(...paths) {
+  return path.join(rootDir, ...paths);
+}
 
-export { __dirname, __filename };
+export { getPath };
