@@ -1,22 +1,24 @@
-const http = require('http');
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use('/add-product', (req, res, next) => {
+app.use(bodyParser.urlencoded());
+
+app.use("/add-product", (req, res, next) => {
   res.send(`
-    <form action="/product" method="post">
-    <input type="text" />
+    <form action="/product" method="POST">
+    <input type="text" name="title"/>
     <button type="submit">Send</button>
     </form>
   `);
 });
 
-app.use('/product', (req, res, next) => {
-  res.redirect('/');
+app.use("/product", (req, res, next) => {
+  res.redirect("/");
 });
 
-app.use('/', (req, res, next) => {
+app.use("/", (req, res, next) => {
   res.send(`
     <h1>Hello from Express!</h1>
   `);
