@@ -1,27 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import bodyParser from "body-parser";
+import express from "express";
+
+import { adminRoutes } from "./routes/admin.js";
+import { shopRoutes } from "./routes/shop.js";
 
 const app = express();
 
+app.use(adminRoutes);
+app.use(shopRoutes);
+
 app.use(bodyParser.urlencoded());
-
-app.use("/add-product", (req, res, next) => {
-  res.send(`
-    <form action="/product" method="POST">
-    <input type="text" name="title"/>
-    <button type="submit">Send</button>
-    </form>
-  `);
-});
-
-app.use("/product", (req, res, next) => {
-  res.redirect("/");
-});
-
-app.use("/", (req, res, next) => {
-  res.send(`
-    <h1>Hello from Express!</h1>
-  `);
-});
 
 app.listen(3000);
