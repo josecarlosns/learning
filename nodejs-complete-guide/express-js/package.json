@@ -1,5 +1,5 @@
 {
-  "name": "express-jsj",
+  "name": "express-js",
   "version": "1.0.0",
   "description": "project for expressjs module",
   "main": "app.js",
@@ -9,6 +9,7 @@
   },
   "author": "Jose Silva",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "body-parser": "^2.2.2",
     "express": "^5.2.1"
