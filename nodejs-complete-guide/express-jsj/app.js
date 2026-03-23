@@ -3,9 +3,14 @@ const express = require('express');
 
 const app = express();
 
-app.use((req, res, next) => {
-  console.log('in the minddelware without the next function');
+app.use('/me', (req, res, next) => {
+  res.json({
+    name: 'Jose',
+    surname: 'Silva'
+  });
+});
 
+app.use('/', (req, res, next) => {
   res.json({
     number: 123.5,
     boolean: true,
@@ -13,6 +18,4 @@ app.use((req, res, next) => {
   });
 });
 
-const server = http.createServer(app);
-
-server.listen(3000);
+app.listen(3000);
