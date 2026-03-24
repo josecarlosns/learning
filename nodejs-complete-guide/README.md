@@ -16,6 +16,7 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
   - [📦 List of Projects](#-list-of-projects)
     - [`p1` NodeJS Basics](#p1-nodejs-basics)
     - [`p2` Working with ExpressJS](#p2-working-with-expressjs)
+    - [`p3` Dynamic content](#p3-dynamic-content)
 
 <!-- tocstop -->
 
@@ -25,19 +26,19 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
 
 ```tree
 .
+├── dynamic-content
+│   ├── public
+│   ├── routes
+│   ├── util
+│   └── views
 ├── express-js
-│   ├── app.js
-│   ├── package.json
-│   ├── package-lock.json
 │   ├── public
 │   ├── routes
 │   ├── utils
 │   └── views
-├── nodejs-basics
-│   └── app.js
-└── README.md
+└── nodejs-basics
 
-7 directories, 5 files
+12 directories
 ```
 
 ---
@@ -65,6 +66,19 @@ A simple project dedicated to learn the basics of NodeJS.
   - **#5** Working with Express.js
 
 A project about adding Expressjs to a node project, adding middlewares, routes and serving static files like HTML pages.
+
+---
+
+### `p3` Dynamic content
+
+![Static Badge](https://img.shields.io/badge/status-skipped-orange)
+
+- **Modules:**
+  - **#6** Working with Dynamic Content & Adding Template Engines
+
+Project to teach the use of template engines like Pug to serve dynamic HTML pages with ExpressJS.
+
+> I decided to skip this project midway because I already use ReactJS to serve dynamic content
 
 ---
 
