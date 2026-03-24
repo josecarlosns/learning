@@ -1,8 +1,7 @@
+import { DUMMY_POSTS } from "../data/dummyData.js";
+
 export function getPosts(req, res) {
-  res.status(200).json({
-    title: "First post",
-    content: "First post content",
-  });
+  res.status(200).json(DUMMY_POSTS);
 }
 
 export function createPost(req, res) {
