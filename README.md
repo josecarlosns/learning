@@ -88,7 +88,7 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
 
 | Folder                  | Course / Resource                   | Topic                 | Last updated | Status         |
 | ----------------------- | ----------------------------------- | --------------------- | ------------ | -------------- |
-| `react-complete-guide`  | Udemy — React: The Complete Guide   | React, Hooks, Redux   | 19/03/2026   | 🟡 In Progress |
+| `react-complete-guide`  | Udemy — React: The Complete Guide   | React, Hooks, Redux   | 19/03/2026   | ⏸️ Paused      |
 | `nodejs-complete-guide` | Udemy - Nodejs - The Complete Guide | NodeJS, GraphQL, REST | 22/03/2026   | 🟡 In Progress |
 
 > Status legend: ✅ Completed · 🟡 In Progress · 🔴 Not Started · ⏸️ Paused
@@ -101,7 +101,7 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
 
 ```bash
 # Navigate to the project
-cd react-complete-course/project-folder
+cd react-complete-guide/project-folder
 
 # Install dependencies
 npm i
@@ -115,7 +115,14 @@ npm run dev
 ### For "`nc1` NodeJS - The Complete Guide" projects
 
 ```bash
-TODO command to run nodejs projects
+# Navigate to the project
+cd  nodejs-complete-guide/project-folder
+
+# Install dependencies
+npm i
+
+# Start the dev server
+npm run dev
 ```
 
 ---
