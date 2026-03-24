@@ -1,8 +1,9 @@
 import express from "express";
-import { getPosts } from "../controllers/feed.js";
+import { createPost, getPosts } from "../controllers/feed.js";
 
 const feedRoutes = express.Router();
 
 feedRoutes.get("/posts", getPosts);
+feedRoutes.post("/posts", createPost);
 
 export { feedRoutes };
