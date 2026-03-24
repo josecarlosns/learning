@@ -17,6 +17,7 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
     - [`p1` NodeJS Basics](#p1-nodejs-basics)
     - [`p2` Working with ExpressJS](#p2-working-with-expressjs)
     - [`p3` Dynamic content](#p3-dynamic-content)
+    - [`p4` REST APIs](#p4-rest-apis)
 
 <!-- tocstop -->
 
@@ -36,9 +37,12 @@ Link: [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-comp
 │   ├── routes
 │   ├── utils
 │   └── views
-└── nodejs-basics
+├── nodejs-basics
+└── rest-api
+    ├── controllers
+    └── routes
 
-12 directories
+15 directories
 ```
 
 ---
@@ -82,4 +86,17 @@ Project to teach the use of template engines like Pug to serve dynamic HTML page
 
 ---
 
-> Last updated: 23/03/2026
+### `p4` REST APIs
+
+![Static Badge](https://img.shields.io/badge/status-inprogress-yellow)
+
+- **Modules:**
+  - **#24** Working with REST APIs - The Basics
+
+Learning how to use ExpressJS to create Rest APIs, how to parse GET, POST, PUT etc. requests and how to use the API as a middle-man to a data storage like PostgreSQL or MongoDB databases.
+
+> I Skipped a bunch of previous modules, for they dealt mostly with HTML templates and my main reason to do this course is to make backend APIs using Express.
+
+---
+
+> Last updated: 24/03/2026
