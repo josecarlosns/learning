@@ -7,6 +7,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(feedRoutes);
+app.use((_, res, next) => {
+  res.setHeaders(
+    new Headers({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    })
+  );
+
+  next();
+});
+
+app.use("/feed", feedRoutes);
 
 app.listen(8080);
