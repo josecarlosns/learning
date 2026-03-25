@@ -1,4 +1,6 @@
 import { validationResult } from "express-validator";
+import { v4 as uuid } from "uuid";
+
 import { DUMMY_POSTS } from "../data/dummyData.js";
 
 const posts = [...DUMMY_POSTS];
@@ -21,7 +23,7 @@ export function createPost(req, res) {
   const { title, author, content } = req.body;
 
   const newPost = {
-    id: new Date().getTime().toString(),
+    id: uuid(),
     date: new Date().toISOString().split("T")[0],
     title,
     author,
