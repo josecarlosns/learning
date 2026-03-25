@@ -1,0 +1,17 @@
+# docker-compose.yml
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: pass123
+      MONGO_INITDB_DATABASE: restapi
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

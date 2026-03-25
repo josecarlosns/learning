@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "start-db": "docker compose up -d",
+    "stop-db": "docker compose down",
+    "delete-db": "docker compose down -v"
   },
   "repository": {
     "type": "git",
