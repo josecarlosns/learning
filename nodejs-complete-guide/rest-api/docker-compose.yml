@@ -9,7 +9,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: pass123
-      MONGO_INITDB_DATABASE: restapi
+      MONGO_INITDB_DATABASE: restapidb
     volumes:
       - mongodb_data:/data/db
 
