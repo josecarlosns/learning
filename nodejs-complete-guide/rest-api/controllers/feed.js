@@ -15,11 +15,14 @@ export async function createPost(req, res) {
   const errors = validationResult(req);
 
   const hasErrors = errors && !errors.isEmpty();
-  if (hasErrors)
-    return res.status(422).json({
-      message: "Validation failed",
-      errors: errors.array(),
+  if (hasErrors) {
+    const validationError = new Error("Validation error on createPost", {
+      cause: errors,
     });
+    validationError.statusCode = 422;
+
+    throw validationError;
+  }
 
   const { title, author, content } = req.body;
 
@@ -40,11 +43,9 @@ export async function createPost(req, res) {
       },
     });
   } catch (error) {
-    res.status(422).json({
-      message: "Error saving Post on DB",
-      payload: {
-        error,
-      },
-    });
+    const hasNoStatusCode = !error.statusCode;
+    if (hasNoStatusCode) error.statusCode = 500;
+
+    throw error;
   }
 }

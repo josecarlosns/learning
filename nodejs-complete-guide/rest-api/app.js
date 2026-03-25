@@ -24,6 +24,16 @@ app.use((_, res, next) => {
 
 app.use("/feed", feedRoutes);
 
+app.use((error, req, res, next) => {
+  const statusCode = error.statusCode || 500;
+  const message = error.message;
+
+  res.status(statusCode).json({
+    message,
+    payload: { error },
+  });
+});
+
 mongoose
   .connect(
     "mongodb://admin:pass123@localhost:27017/restapidb?authSource=admin&directConnection=true"
