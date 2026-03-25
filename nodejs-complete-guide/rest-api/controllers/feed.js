@@ -1,15 +1,17 @@
 import { validationResult } from "express-validator";
-import { v4 as uuid } from "uuid";
 
 import { DUMMY_POSTS } from "../data/dummyData.js";
+import { PostModel } from "../models/posts.js";
 
 const posts = [...DUMMY_POSTS];
 
-export function getPosts(req, res) {
-  res.status(200).json(posts);
+export async function getPosts(req, res) {
+  const posts = res.status(200).json({
+    payload: { posts },
+  });
 }
 
-export function createPost(req, res) {
+export async function createPost(req, res) {
   const errors = validationResult(req);
 
   const hasErrors = errors && !errors.isEmpty();
@@ -19,23 +21,34 @@ export function createPost(req, res) {
       errors: errors.array(),
     });
 
-  // TODO create post in DB
   const { title, author, content } = req.body;
 
-  const newPost = {
-    id: uuid(),
-    date: new Date().toISOString().split("T")[0],
+  const newPost = new PostModel({
     title,
     author,
     content,
-  };
-
-  posts.push(newPost);
-
-  res.status(201).json({
-    message: "Post Created Successfully",
-    data: {
-      newPost,
-    },
   });
+
+  try {
+    const savedPost = await newPost.save();
+    posts.push(savedPost.toJSON());
+
+    console.log(`Post "${title}" created successfully!`);
+
+    res.status(201).json({
+      message: "Post Created Successfully",
+      paylload: {
+        post: savedPost,
+      },
+    });
+  } catch (error) {
+    console.log("DB error:", error);
+
+    res.status(422).json({
+      message: "Error saving Post on DB",
+      payload: {
+        error,
+      },
+    });
+  }
 }
