@@ -33,8 +33,6 @@ export async function createPost(req, res) {
     const savedPost = await newPost.save();
     posts.push(savedPost.toJSON());
 
-    console.log(`Post "${title}" created successfully!`);
-
     res.status(201).json({
       message: "Post Created Successfully",
       paylload: {
@@ -42,8 +40,6 @@ export async function createPost(req, res) {
       },
     });
   } catch (error) {
-    console.log("DB error:", error);
-
     res.status(422).json({
       message: "Error saving Post on DB",
       payload: {

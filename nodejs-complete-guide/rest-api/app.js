@@ -3,10 +3,12 @@ import express from "express";
 
 import mongoose from "mongoose";
 import { feedRoutes } from "./routes/feed.js";
+import { getPath } from "./utils/jsUtils.js";
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use("/images", express.static(getPath("images")));
 
 app.use((_, res, next) => {
   res.setHeaders(
