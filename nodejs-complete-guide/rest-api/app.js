@@ -24,7 +24,7 @@ app.use((_, res, next) => {
 
 app.use("/feed", feedRoutes);
 
-app.use((error, req, res, next) => {
+app.use((error, _, res, _) => {
   const statusCode = error.statusCode || 500;
   const message = error.message;
 
