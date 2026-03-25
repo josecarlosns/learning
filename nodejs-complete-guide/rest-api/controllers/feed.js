@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { DUMMY_POSTS } from "../data/dummyData.js";
 
 const posts = [...DUMMY_POSTS];
@@ -7,6 +8,15 @@ export function getPosts(req, res) {
 }
 
 export function createPost(req, res) {
+  const errors = validationResult(req);
+
+  const hasErrors = errors && !errors.isEmpty();
+  if (hasErrors)
+    return res.status(422).json({
+      message: "Validation failed",
+      errors: errors.array(),
+    });
+
   // TODO create post in DB
   const { title, author, content } = req.body;
 
