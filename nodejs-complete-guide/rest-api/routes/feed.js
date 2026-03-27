@@ -1,7 +1,7 @@
 import express from "express";
 import { body } from "express-validator";
 
-import { createPost, getPost, getPosts } from "../controllers/feed.js";
+import { createPost, getPostById, getPosts } from "../controllers/feed.js";
 
 const feedRoutes = express.Router();
 
@@ -14,6 +14,6 @@ feedRoutes.post(
   ],
   createPost
 );
-feedRoutes.get("/posts/:postId", getPost);
+feedRoutes.get("/posts/:postId", getPostById);
 
 export { feedRoutes };

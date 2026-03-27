@@ -32,12 +32,23 @@ export async function createPost(req, res) {
     throw validationError;
   }
 
-  const { title, author, content } = req.body;
+  const hasNoImageFile = !req.file;
+  if (hasNoImageFile) {
+    const error = new Error("No Image Provided");
+    error.statusCode = 422;
+
+    throw error;
+  }
+
+  const { title, author, content, date } = req.body;
+  const image = req.file.path;
 
   const newPost = new PostModel({
     title,
     author,
     content,
+    date,
+    image,
   });
 
   try {
@@ -58,7 +69,7 @@ export async function createPost(req, res) {
   }
 }
 
-export async function getPost(req, res) {
+export async function getPostById(req, res) {
   const { postId } = req.params;
   try {
     const foundPost = await PostModel.findById(postId);

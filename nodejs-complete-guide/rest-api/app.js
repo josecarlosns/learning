@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
+import multer from "multer";
 
 import { DUMMY_POSTS } from "./data/dummyData.js";
 import { PostModel } from "./models/posts.js";
@@ -9,7 +10,31 @@ import { getPath } from "./utils/jsUtils.js";
 
 const app = express();
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 app.use(bodyParser.json());
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
 app.use("/images", express.static(getPath("images")));
 
 app.use((req, res, next) => {
@@ -41,8 +66,6 @@ mongoose
     "mongodb://admin:pass123@localhost:27017/restapidb?authSource=admin&directConnection=true"
   )
   .then(async () => {
-    console.log("Connected to database successfully");
-
     await PostModel.deleteMany();
 
     const postsModel = DUMMY_POSTS.map((post) => new PostModel(post));
