@@ -7,8 +7,15 @@ import { isEmptyObject } from "../utils/jsUtils.js";
 const posts = [...DUMMY_POSTS];
 
 export async function getPosts(_, res) {
-  const posts = res.status(200).json({
-    payload: { posts },
+  const posts = await PostModel.find();
+
+  if (isEmptyObject(posts)) throw new Error("Error fetching posts");
+
+  return res.status(200).json({
+    message: "Posts fetched successfully",
+    payload: {
+      posts,
+    },
   });
 }
 

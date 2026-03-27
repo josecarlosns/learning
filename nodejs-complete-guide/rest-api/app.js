@@ -1,7 +1,9 @@
 import bodyParser from "body-parser";
 import express from "express";
-
 import mongoose from "mongoose";
+
+import { DUMMY_POSTS } from "./data/dummyData.js";
+import { PostModel } from "./models/posts.js";
 import { feedRoutes } from "./routes/feed.js";
 import { getPath } from "./utils/jsUtils.js";
 
@@ -10,7 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use("/images", express.static(getPath("images")));
 
-app.use((_, res, next) => {
+app.use((req, res, next) => {
   res.setHeaders(
     new Headers({
       "Access-Control-Allow-Origin": "*",
@@ -24,7 +26,7 @@ app.use((_, res, next) => {
 
 app.use("/feed", feedRoutes);
 
-app.use((error, _, res, _) => {
+app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
   const message = error.message;
 
@@ -38,8 +40,13 @@ mongoose
   .connect(
     "mongodb://admin:pass123@localhost:27017/restapidb?authSource=admin&directConnection=true"
   )
-  .then(() => {
+  .then(async () => {
     console.log("Connected to database successfully");
+
+    await PostModel.deleteMany();
+
+    const postsModel = DUMMY_POSTS.map((post) => new PostModel(post));
+    await PostModel.bulkSave(postsModel);
 
     app.listen(8080);
   })
