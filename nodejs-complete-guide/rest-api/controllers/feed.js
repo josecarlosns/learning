@@ -1,7 +1,7 @@
 import { DUMMY_POSTS } from "../data/dummyData.js";
 import { PostModel } from "../models/posts.js";
 import { isEmptyObject, isNullOrUndefined } from "../utils/jsUtils.js";
-import { checkValidationErrors } from "./utils.js";
+import { checkValidationErrors, deleteImage } from "./utils.js";
 
 const posts = [...DUMMY_POSTS];
 
@@ -93,7 +93,7 @@ export async function updatePostById(req, res) {
 
   try {
     const { title, content, author, date } = data;
-    const image = !isEmptyObject(req.file) ? req.file.url : data.image;
+    const image = !isEmptyObject(req.file) ? req.file.path : data.image;
 
     const post = await PostModel.findById(postId);
     if (isEmptyObject(post)) {
@@ -108,7 +108,10 @@ export async function updatePostById(req, res) {
     if (!isNullOrUndefined(content)) post.content = content;
     if (!isNullOrUndefined(author)) post.author = author;
     if (!isNullOrUndefined(date)) post.date = date;
-    if (!isNullOrUndefined(image)) post.image = image;
+    if (image !== post.image) {
+      if (!isNullOrUndefined(post.image)) await deleteImage(post.image);
+      post.image = image;
+    }
 
     const result = await post.save();
 

@@ -1,4 +1,6 @@
 import { validationResult } from "express-validator";
+import fs from "fs";
+import { getPath, isNullOrUndefined } from "../utils/jsUtils.js";
 
 function checkValidationErrors(req) {
   const errors = validationResult(req);
@@ -14,4 +16,12 @@ function checkValidationErrors(req) {
   }
 }
 
-export { checkValidationErrors };
+async function deleteImage(filePath) {
+  const file = getPath(filePath);
+  await fs.unlink(file, (err) => {
+    if (!isNullOrUndefined(err)) console.log(err);
+    console.log(`File ${filePath} deleted`);
+  });
+}
+
+export { checkValidationErrors, deleteImage };
