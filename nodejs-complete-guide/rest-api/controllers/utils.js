@@ -19,6 +19,7 @@ function checkValidationErrors(req) {
 async function deleteImage(filePath) {
   const file = getPath(filePath);
   await fs.unlink(file, (err) => {
+    // TODO remove these logs
     if (!isNullOrUndefined(err)) console.log(err);
     console.log(`File ${filePath} deleted`);
   });

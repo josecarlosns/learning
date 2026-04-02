@@ -3,6 +3,7 @@ import { body } from "express-validator";
 
 import {
   createPost,
+  deletePostById,
   getPostById,
   getPosts,
   updatePostById,
@@ -22,5 +23,6 @@ feedRoutes.post(
 );
 feedRoutes.get("/posts/:postId", getPostById);
 feedRoutes.put("/posts/:postId", updatePostById);
+feedRoutes.delete("/posts/:postId", deletePostById);
 
 export { feedRoutes };

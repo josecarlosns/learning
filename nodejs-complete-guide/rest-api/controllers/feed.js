@@ -131,3 +131,34 @@ export async function updatePostById(req, res) {
     throw newError;
   }
 }
+
+export async function deletePostById(req, res) {
+  checkValidationErrors(req);
+
+  const { postId } = req.params;
+
+  try {
+    const post = await PostModel.findByIdAndDelete(postId);
+    if (!isEmptyObject(post)) {
+      if (!isNullOrUndefined(post.image)) deleteImage(post.image);
+
+      return res.status(200).json({
+        message: "Post deleted succcessfully!",
+        payload: { post },
+      });
+    } else
+      return res.status(404).json({
+        message: "Post not found",
+      });
+  } catch (error) {
+    const newError = new Error("Error updating post", { cause: error });
+    newError.statusCode = error.statusCode || 500;
+    newError.payload = {
+      error,
+      postId,
+      data,
+    };
+
+    throw newError;
+  }
+}
