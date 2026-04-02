@@ -11,7 +11,7 @@ function isNullOrUndefined(value) {
 }
 
 function isEmptyObject(object) {
-  return isNullOrUndefined(object) || Object.keys(object) === 0;
+  return isNullOrUndefined(object) || Object.keys(object).length === 0;
 }
 
 function isEmptyString(string) {
