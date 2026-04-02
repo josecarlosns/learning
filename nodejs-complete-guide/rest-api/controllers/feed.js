@@ -1,8 +1,7 @@
-import { validationResult } from "express-validator";
-
 import { DUMMY_POSTS } from "../data/dummyData.js";
 import { PostModel } from "../models/posts.js";
-import { isEmptyObject } from "../utils/jsUtils.js";
+import { isEmptyObject, isNullOrUndefined } from "../utils/jsUtils.js";
+import { checkValidationErrors } from "./utils.js";
 
 const posts = [...DUMMY_POSTS];
 
@@ -20,17 +19,7 @@ export async function getPosts(_, res) {
 }
 
 export async function createPost(req, res) {
-  const errors = validationResult(req);
-
-  const hasErrors = errors && !errors.isEmpty();
-  if (hasErrors) {
-    const validationError = new Error("Validation error on createPost", {
-      cause: errors,
-    });
-    validationError.statusCode = 422;
-
-    throw validationError;
-  }
+  checkValidationErrors(req);
 
   const hasNoImageFile = !req.file;
   if (hasNoImageFile) {
@@ -90,6 +79,50 @@ export async function getPostById(req, res) {
     newError.statusCode = error.statusCode || 500;
     newError.payload = {
       error,
+    };
+
+    throw newError;
+  }
+}
+
+export async function updatePostById(req, res) {
+  checkValidationErrors(req);
+
+  const { postId } = req.params;
+  const data = req.body;
+
+  try {
+    const { title, content, author, date } = data;
+    const image = !isEmptyObject(req.file) ? req.file.url : data.image;
+
+    const post = await PostModel.findById(postId);
+    if (isEmptyObject(post)) {
+      const error = new Error("Post not found");
+      error.statusCode = 404;
+      error.payload = { postId };
+
+      throw error;
+    }
+
+    if (!isNullOrUndefined(title)) post.title = title;
+    if (!isNullOrUndefined(content)) post.content = content;
+    if (!isNullOrUndefined(author)) post.author = author;
+    if (!isNullOrUndefined(date)) post.date = date;
+    if (!isNullOrUndefined(image)) post.image = image;
+
+    const result = await post.save();
+
+    return res.status(200).json({
+      message: "Post updated succcessfully!",
+      payload: { post: result },
+    });
+  } catch (error) {
+    const newError = new Error("Error updating post", { cause: error });
+    newError.statusCode = error.statusCode || 500;
+    newError.payload = {
+      error,
+      postId,
+      data,
     };
 
     throw newError;

@@ -1,7 +1,12 @@
 import express from "express";
 import { body } from "express-validator";
 
-import { createPost, getPostById, getPosts } from "../controllers/feed.js";
+import {
+  createPost,
+  getPostById,
+  getPosts,
+  updatePostById,
+} from "../controllers/feed.js";
 
 const feedRoutes = express.Router();
 
@@ -11,9 +16,11 @@ feedRoutes.post(
   [
     body("title").trim().isLength({ min: 5 }),
     body("content").trim().isLength({ min: 5 }),
+    body("author").trim().isLength({ min: 5 }),
   ],
   createPost
 );
 feedRoutes.get("/posts/:postId", getPostById);
+feedRoutes.put("/posts/:postId", updatePostById);
 
 export { feedRoutes };
