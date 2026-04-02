@@ -5,14 +5,20 @@ import { checkValidationErrors, deleteImage } from "./utils.js";
 
 const posts = [...DUMMY_POSTS];
 
-export async function getPosts(_, res) {
-  const posts = await PostModel.find();
+export async function getPosts(req, res) {
+  const page = req.query.page || 1;
+  const limit = req.query.limit || 10;
+  const skip = (page - 1) * limit;
+
+  const posts = await PostModel.find().skip(skip).limit(limit);
+  const totalPosts = await PostModel.countDocuments();
 
   if (isEmptyObject(posts)) throw new Error("Error fetching posts");
 
   return res.status(200).json({
     message: "Posts fetched successfully",
     payload: {
+      totalPosts,
       posts,
     },
   });
