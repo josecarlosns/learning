@@ -6,6 +6,7 @@ import multer from "multer";
 import { DUMMY_POSTS } from "./data/dummyData.js";
 import { PostModel } from "./models/posts.js";
 import { feedRoutes } from "./routes/feed.js";
+import { userRoutes } from "./routes/user.js";
 import { getPath } from "./utils/jsUtils.js";
 
 const app = express();
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/feed", feedRoutes);
+app.use("/auth", userRoutes);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;

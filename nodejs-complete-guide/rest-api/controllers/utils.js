@@ -2,7 +2,7 @@ import { validationResult } from "express-validator";
 import fs from "fs";
 import { getPath, isNullOrUndefined } from "../utils/jsUtils.js";
 
-function checkValidationErrors(req) {
+function checkValidationErrors(req, payload) {
   const errors = validationResult(req);
 
   const hasErrors = errors && !errors.isEmpty();
@@ -11,6 +11,7 @@ function checkValidationErrors(req) {
       cause: errors,
     });
     validationError.statusCode = 422;
+    if (!isEmptyObject(payload)) validationError.payload = payload;
 
     throw validationError;
   }
