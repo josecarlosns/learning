@@ -25,7 +25,7 @@ export async function getPosts(req, res) {
 }
 
 export async function createPost(req, res) {
-  checkValidationErrors(req);
+  checkValidationErrors({ req, path: "/feed" });
 
   const hasNoImageFile = !req.file;
   if (hasNoImageFile) {
@@ -92,7 +92,7 @@ export async function getPostById(req, res) {
 }
 
 export async function updatePostById(req, res) {
-  checkValidationErrors(req);
+  checkValidationErrors({ req, path: "/feed" });
 
   const { postId } = req.params;
   const data = req.body;
@@ -139,7 +139,7 @@ export async function updatePostById(req, res) {
 }
 
 export async function deletePostById(req, res) {
-  checkValidationErrors(req);
+  checkValidationErrors({ req, path: "/feed" });
 
   const { postId } = req.params;
 

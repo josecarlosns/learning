@@ -13,11 +13,9 @@ userRoutes.post(
     body("email")
       .isEmail()
       .withMessage("Please enter a valid email")
-      .custom((value, { req }) => {
-        return UserModel.findOne({ email: value }).then((user) => {
-          if (!isEmptyObject(user))
-            return Promise.reject("Email already in use");
-        });
+      .custom(async (value, { req }) => {
+        const user = await UserModel.findOne({ email: value });
+        if (!isEmptyObject(user)) throw new Error("Email already in use");
       })
       .normalizeEmail(),
     body("password").trim().isLength({ min: 5 }),

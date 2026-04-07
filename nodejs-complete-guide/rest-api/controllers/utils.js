@@ -1,15 +1,14 @@
 import { validationResult } from "express-validator";
 import fs from "fs";
-import { getPath, isNullOrUndefined } from "../utils/jsUtils.js";
+import { getPath, isEmptyObject, isNullOrUndefined } from "../utils/jsUtils.js";
 
-function checkValidationErrors(req, payload) {
+function checkValidationErrors({ req, path, payload }) {
   const errors = validationResult(req);
 
   const hasErrors = errors && !errors.isEmpty();
   if (hasErrors) {
-    const validationError = new Error("Validation error on createPost", {
-      cause: errors,
-    });
+    const validationError = new Error(`Validation error on ${path}`);
+    validationError.fields = errors.array().map((err) => err.msg);
     validationError.statusCode = 422;
     if (!isEmptyObject(payload)) validationError.payload = payload;
 

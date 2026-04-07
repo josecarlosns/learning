@@ -59,7 +59,7 @@ app.use((error, req, res, next) => {
 
   res.status(statusCode).json({
     message,
-    payload: { error },
+    ...error,
   });
 });
 

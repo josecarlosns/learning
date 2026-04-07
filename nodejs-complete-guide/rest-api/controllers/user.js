@@ -4,11 +4,17 @@ import { UserModel } from "../models/user.js";
 import { isEmptyObject } from "../utils/jsUtils.js";
 import { checkValidationErrors } from "./utils.js";
 
+const BASEPATH = "/auth";
+
 async function login(req, res, next) {}
 
 async function signup(req, res, next) {
   const { email, password, name } = req.body;
-  checkValidationErrors(req, { email, password, name });
+  checkValidationErrors({
+    req,
+    path: `${BASEPATH}/signup`,
+    payload: { email, password, name },
+  });
 
   try {
     const userExists = await UserModel.findOne({ $or: [{ email }, { name }] });
