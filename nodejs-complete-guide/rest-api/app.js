@@ -5,6 +5,7 @@ import multer from "multer";
 
 import { DUMMY_POSTS } from "./data/dummyData.js";
 import { PostModel } from "./models/posts.js";
+import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
 import { userRoutes } from "./routes/user.js";
 import { getPath } from "./utils/jsUtils.js";
@@ -69,6 +70,7 @@ mongoose
   )
   .then(async () => {
     await PostModel.deleteMany();
+    await UserModel.deleteMany();
 
     const postsModel = DUMMY_POSTS.map((post) => new PostModel(post));
     await PostModel.bulkSave(postsModel);
