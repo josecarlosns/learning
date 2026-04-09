@@ -16,8 +16,16 @@ function isEmptyObject(object) {
 
 function isEmptyString(string) {
   return (
-    !isNullOrUndefined(string) && typeof string === "string" && string === ""
+    isNullOrUndefined(string) || (typeof string === "string" && string === "")
   );
 }
 
-export { getPath, isEmptyObject, isEmptyString, isNullOrUndefined };
+function getError({ message, statusCode, payload, cause }) {
+  const error = new Error(message, cause);
+  error.statusCode = statusCode;
+  error.payload = payload;
+
+  return error;
+}
+
+export { getError, getPath, isEmptyObject, isEmptyString, isNullOrUndefined };

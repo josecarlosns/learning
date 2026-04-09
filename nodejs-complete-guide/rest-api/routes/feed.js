@@ -8,10 +8,11 @@ import {
   getPosts,
   updatePostById,
 } from "../controllers/feed.js";
+import { checkAuth } from "../middleware/auth.js";
 
 const feedRoutes = express.Router();
 
-feedRoutes.get("/posts", getPosts);
+feedRoutes.get("/posts", checkAuth, getPosts);
 feedRoutes.post(
   "/posts",
   [
