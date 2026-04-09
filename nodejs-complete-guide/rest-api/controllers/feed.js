@@ -1,4 +1,3 @@
-import { DUMMY_POSTS } from "../data/dummyData.js";
 import { PostModel } from "../models/posts.js";
 import { UserModel } from "../models/user.js";
 import {
@@ -8,8 +7,6 @@ import {
   isNullOrUndefined,
 } from "../utils/jsUtils.js";
 import { checkValidationErrors, deleteImage } from "./utils.js";
-
-const posts = [...DUMMY_POSTS];
 
 export async function getPosts(req, res) {
   const page = req.query.page || 1;
@@ -45,7 +42,7 @@ export async function createPost(req, res) {
       statusCode: 401,
     });
 
-  const loggedUser = await UserModel.findById(userId);
+  const loggedUser = await UserModel.findById(userId).select("_id name email");
 
   if (isEmptyObject(loggedUser))
     throw getError({
@@ -76,7 +73,6 @@ export async function createPost(req, res) {
   });
 
   const savedPost = await newPost.save();
-  posts.push(savedPost.toJSON());
 
   res.status(201).json({
     message: "Post Created Successfully",
@@ -108,9 +104,18 @@ export async function getPostById(req, res) {
 export async function updatePostById(req, res) {
   checkValidationErrors({ req, path: "/feed" });
 
+  const { userId } = req;
+
+  if (isEmptyString(userId))
+    throw getError({
+      message: "Not logged in",
+      statusCode: 401,
+    });
+
+  const loggedUser = await UserModel.findById(userId).select("_id name email");
+
   const { postId } = req.params;
   const data = req.body;
-
   const { title, content, author, date } = data;
   const image = !isEmptyObject(req.file) ? req.file.path : data.image;
 
@@ -124,6 +129,16 @@ export async function updatePostById(req, res) {
 
     throw error;
   }
+
+  if (post.author._id !== loggedUser._id)
+    throw getError({
+      message: "Unauthorized",
+      statusCode: 401,
+      payload: {
+        userId,
+        authorId: post.author._id,
+      },
+    });
 
   if (!isNullOrUndefined(title)) post.title = title;
   if (!isNullOrUndefined(content)) post.content = content;
@@ -145,11 +160,31 @@ export async function updatePostById(req, res) {
 export async function deletePostById(req, res) {
   checkValidationErrors({ req, path: "/feed" });
 
+  const { userId } = req;
+
+  if (isEmptyString(userId))
+    throw getError({
+      message: "Not logged in",
+      statusCode: 401,
+    });
+
+  const loggedUser = await UserModel.findById(userId).select("_id name email");
+
   const { postId } = req.params;
 
   const post = await PostModel.findByIdAndDelete(postId);
   if (!isEmptyObject(post)) {
     if (!isNullOrUndefined(post.image)) deleteImage(post.image);
+
+    if (post.author._id !== loggedUser._id)
+      throw getError({
+        message: "Unauthorized",
+        statusCode: 401,
+        payload: {
+          userId,
+          authorId: post.author._id,
+        },
+      });
 
     return res.status(200).json({
       message: "Post deleted succcessfully!",
