@@ -1,8 +1,10 @@
 import { DUMMY_POSTS } from "../data/dummyData.js";
 import { PostModel } from "../models/posts.js";
+import { UserModel } from "../models/user.js";
 import {
   getError,
   isEmptyObject,
+  isEmptyString,
   isNullOrUndefined,
 } from "../utils/jsUtils.js";
 import { checkValidationErrors, deleteImage } from "./utils.js";
@@ -14,7 +16,10 @@ export async function getPosts(req, res) {
   const limit = req.query.limit || 10;
   const skip = (page - 1) * limit;
 
-  const posts = await PostModel.find().skip(skip).limit(limit);
+  const posts = await PostModel.find()
+    .skip(skip)
+    .limit(limit)
+    .populate("author", "_id name email");
   const totalPosts = await PostModel.countDocuments();
 
   if (isEmptyObject(posts))
@@ -32,6 +37,23 @@ export async function getPosts(req, res) {
 export async function createPost(req, res) {
   checkValidationErrors({ req, path: "/feed" });
 
+  const { userId } = req;
+
+  if (isEmptyString(userId))
+    throw getError({
+      message: "Not logged in",
+      statusCode: 401,
+    });
+
+  const loggedUser = await UserModel.findById(userId);
+
+  if (isEmptyObject(loggedUser))
+    throw getError({
+      message: "User not found",
+      statusCode: 404,
+      payload: { userId },
+    });
+
   const hasNoImageFile = !req.file;
   if (hasNoImageFile) {
     const error = getError({
@@ -42,12 +64,12 @@ export async function createPost(req, res) {
     throw error;
   }
 
-  const { title, author, content, date } = req.body;
+  const { title, content, date } = req.body;
   const image = req.file.path;
 
   const newPost = new PostModel({
     title,
-    author,
+    author: loggedUser,
     content,
     date,
     image,
