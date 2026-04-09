@@ -3,7 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 
-import { DUMMY_POSTS } from "./data/dummyData.js";
+import { hashSync } from "bcryptjs";
+import { DUMMY_POSTS, DUMMY_USERS } from "./data/dummyData.js";
 import { PostModel } from "./models/posts.js";
 import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
@@ -72,8 +73,28 @@ mongoose
     await PostModel.deleteMany();
     await UserModel.deleteMany();
 
-    const postsModel = DUMMY_POSTS.map((post) => new PostModel(post));
-    await PostModel.bulkSave(postsModel);
+    const users = DUMMY_USERS.map((user) => {
+      const { password } = user;
+      const hashedPassword = hashSync(password, 12);
+      const newUser = new UserModel({
+        ...user,
+        password: hashedPassword,
+        status: "NEW",
+      });
+
+      return newUser;
+    });
+    await UserModel.bulkSave(users);
+
+    const posts = DUMMY_POSTS.map((post) => {
+      const { author } = post;
+      const authorUser = users.find((user) => user.name === author);
+
+      const newPost = new PostModel({ ...post, author: authorUser });
+
+      return newPost;
+    });
+    await PostModel.bulkSave(posts);
 
     app.listen(8080);
   })

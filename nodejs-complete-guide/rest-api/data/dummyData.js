@@ -1,3 +1,42 @@
+const DUMMY_USERS = [
+  {
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    password: "hashed_password_1",
+    status: "active",
+  },
+  {
+    name: "Carlos Mendes",
+    email: "carlos@example.com",
+    password: "hashed_password_2",
+    status: "active",
+  },
+  {
+    name: "Sarah Kim",
+    email: "sarah@example.com",
+    password: "hashed_password_3",
+    status: "active",
+  },
+  {
+    name: "Daniel Ferreira",
+    email: "daniel@example.com",
+    password: "hashed_password_4",
+    status: "inactive",
+  },
+  {
+    name: "Lucas Oliveira",
+    email: "lucas@example.com",
+    password: "hashed_password_5",
+    status: "active",
+  },
+  {
+    name: "Noah Pereira",
+    email: "noah@example.com",
+    password: "hashed_password_6",
+    status: "active",
+  },
+];
+
 const DUMMY_POSTS = [
   {
     title: "Getting Started with React Hooks",
@@ -141,4 +180,4 @@ const DUMMY_POSTS = [
   },
 ];
 
-export { DUMMY_POSTS };
+export { DUMMY_POSTS, DUMMY_USERS };
