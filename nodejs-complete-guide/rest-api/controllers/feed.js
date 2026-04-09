@@ -1,6 +1,10 @@
 import { DUMMY_POSTS } from "../data/dummyData.js";
 import { PostModel } from "../models/posts.js";
-import { isEmptyObject, isNullOrUndefined } from "../utils/jsUtils.js";
+import {
+  getError,
+  isEmptyObject,
+  isNullOrUndefined,
+} from "../utils/jsUtils.js";
 import { checkValidationErrors, deleteImage } from "./utils.js";
 
 const posts = [...DUMMY_POSTS];
@@ -13,7 +17,8 @@ export async function getPosts(req, res) {
   const posts = await PostModel.find().skip(skip).limit(limit);
   const totalPosts = await PostModel.countDocuments();
 
-  if (isEmptyObject(posts)) throw new Error("Error fetching posts");
+  if (isEmptyObject(posts))
+    throw getError({ message: "Error fetching posts", statusCode: 500 });
 
   return res.status(200).json({
     message: "Posts fetched successfully",
@@ -29,8 +34,10 @@ export async function createPost(req, res) {
 
   const hasNoImageFile = !req.file;
   if (hasNoImageFile) {
-    const error = new Error("No Image Provided");
-    error.statusCode = 422;
+    const error = getError({
+      message: "No image provided",
+      statusCode: 422,
+    });
 
     throw error;
   }
@@ -46,49 +53,34 @@ export async function createPost(req, res) {
     image,
   });
 
-  try {
-    const savedPost = await newPost.save();
-    posts.push(savedPost.toJSON());
+  const savedPost = await newPost.save();
+  posts.push(savedPost.toJSON());
 
-    res.status(201).json({
-      message: "Post Created Successfully",
-      paylload: {
-        post: savedPost,
-      },
-    });
-  } catch (error) {
-    const hasNoStatusCode = !error.statusCode;
-    if (hasNoStatusCode) error.statusCode = 500;
-
-    throw error;
-  }
+  res.status(201).json({
+    message: "Post Created Successfully",
+    paylload: {
+      post: savedPost,
+    },
+  });
 }
 
 export async function getPostById(req, res) {
   const { postId } = req.params;
-  try {
-    const foundPost = await PostModel.findById(postId);
+  const foundPost = await PostModel.findById(postId);
 
-    if (isEmptyObject(foundPost)) {
-      const error = new Error("Post not found");
-      error.statusCode = 404;
-
-      throw error;
-    }
-
-    res.status(200).json({
-      message: "Post fetched successfully",
-      payload: { post: foundPost },
+  if (isEmptyObject(foundPost)) {
+    const error = getError({
+      message: "Post not found",
+      statusCode: 404,
+      payload: { postId },
     });
-  } catch (error) {
-    const newError = new Error("Error searching for post", { cause: error });
-    newError.statusCode = error.statusCode || 500;
-    newError.payload = {
-      error,
-    };
-
-    throw newError;
+    throw error;
   }
+
+  res.status(200).json({
+    message: "Post fetched successfully",
+    payload: { post: foundPost },
+  });
 }
 
 export async function updatePostById(req, res) {
@@ -97,45 +89,35 @@ export async function updatePostById(req, res) {
   const { postId } = req.params;
   const data = req.body;
 
-  try {
-    const { title, content, author, date } = data;
-    const image = !isEmptyObject(req.file) ? req.file.path : data.image;
+  const { title, content, author, date } = data;
+  const image = !isEmptyObject(req.file) ? req.file.path : data.image;
 
-    const post = await PostModel.findById(postId);
-    if (isEmptyObject(post)) {
-      const error = new Error("Post not found");
-      error.statusCode = 404;
-      error.payload = { postId };
-
-      throw error;
-    }
-
-    if (!isNullOrUndefined(title)) post.title = title;
-    if (!isNullOrUndefined(content)) post.content = content;
-    if (!isNullOrUndefined(author)) post.author = author;
-    if (!isNullOrUndefined(date)) post.date = date;
-    if (image !== post.image) {
-      if (!isNullOrUndefined(post.image)) await deleteImage(post.image);
-      post.image = image;
-    }
-
-    const result = await post.save();
-
-    return res.status(200).json({
-      message: "Post updated succcessfully!",
-      payload: { post: result },
+  const post = await PostModel.findById(postId);
+  if (isEmptyObject(post)) {
+    const error = getError({
+      message: "Post not found",
+      statusCode: 404,
+      payload: { postId },
     });
-  } catch (error) {
-    const newError = new Error("Error updating post", { cause: error });
-    newError.statusCode = error.statusCode || 500;
-    newError.payload = {
-      error,
-      postId,
-      data,
-    };
 
-    throw newError;
+    throw error;
   }
+
+  if (!isNullOrUndefined(title)) post.title = title;
+  if (!isNullOrUndefined(content)) post.content = content;
+  if (!isNullOrUndefined(author)) post.author = author;
+  if (!isNullOrUndefined(date)) post.date = date;
+  if (image !== post.image) {
+    if (!isNullOrUndefined(post.image)) await deleteImage(post.image);
+    post.image = image;
+  }
+
+  const result = await post.save();
+
+  return res.status(200).json({
+    message: "Post updated succcessfully!",
+    payload: { post: result },
+  });
 }
 
 export async function deletePostById(req, res) {
@@ -143,28 +125,18 @@ export async function deletePostById(req, res) {
 
   const { postId } = req.params;
 
-  try {
-    const post = await PostModel.findByIdAndDelete(postId);
-    if (!isEmptyObject(post)) {
-      if (!isNullOrUndefined(post.image)) deleteImage(post.image);
+  const post = await PostModel.findByIdAndDelete(postId);
+  if (!isEmptyObject(post)) {
+    if (!isNullOrUndefined(post.image)) deleteImage(post.image);
 
-      return res.status(200).json({
-        message: "Post deleted succcessfully!",
-        payload: { post },
-      });
-    } else
-      return res.status(404).json({
-        message: "Post not found",
-      });
-  } catch (error) {
-    const newError = new Error("Error updating post", { cause: error });
-    newError.statusCode = error.statusCode || 500;
-    newError.payload = {
-      error,
-      postId,
-      data,
-    };
-
-    throw newError;
-  }
+    return res.status(200).json({
+      message: "Post deleted succcessfully!",
+      payload: { post },
+    });
+  } else
+    throw getError({
+      message: "Post not found",
+      statusCode: 404,
+      payload: { postId },
+    });
 }

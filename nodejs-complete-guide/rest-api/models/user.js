@@ -17,7 +17,7 @@ const userSchema = new Schema(
     },
     status: {
       type: String,
-      default: "NEW",
+      default: "active",
     },
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   },
