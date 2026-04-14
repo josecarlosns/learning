@@ -9,6 +9,7 @@ import { PostModel } from "./models/posts.js";
 import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
 import { userRoutes } from "./routes/user.js";
+import { initSocket } from "./socket.js";
 import { getPath } from "./utils/jsUtils.js";
 
 const app = express();
@@ -96,7 +97,12 @@ mongoose
     });
     await PostModel.bulkSave(posts);
 
-    app.listen(8080);
+    const server = app.listen(8080);
+    const io = initSocket(server);
+
+    io.on("connection", (socket) => {
+      console.log("connected");
+    });
   })
   .catch((err) => {
     console.log("Error connecting to db: ", err);
