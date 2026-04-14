@@ -1,5 +1,6 @@
 import { PostModel } from "../models/posts.js";
 import { UserModel } from "../models/user.js";
+import { getSocket } from "../socket.js";
 import {
   getError,
   isEmptyObject,
@@ -16,6 +17,7 @@ export async function getPosts(req, res) {
   const posts = await PostModel.find()
     .skip(skip)
     .limit(limit)
+    .sort({ createdAt: -1 })
     .populate("author", "_id name email");
   const totalPosts = await PostModel.countDocuments();
 
@@ -74,6 +76,11 @@ export async function createPost(req, res) {
 
   const savedPost = await newPost.save();
 
+  getSocket().emit("posts", {
+    action: "create",
+    post: savedPost,
+  });
+
   res.status(201).json({
     message: "Post Created Successfully",
     paylload: {
@@ -119,7 +126,10 @@ export async function updatePostById(req, res) {
   const { title, content, author, date } = data;
   const image = !isEmptyObject(req.file) ? req.file.path : data.image;
 
-  const post = await PostModel.findById(postId);
+  const post = await PostModel.findById(postId).populate(
+    "author",
+    "_id name email"
+  );
   if (isEmptyObject(post)) {
     const error = getError({
       message: "Post not found",
@@ -130,7 +140,7 @@ export async function updatePostById(req, res) {
     throw error;
   }
 
-  if (post.author._id !== loggedUser._id)
+  if (post.author._id.toString() !== loggedUser._id.toString())
     throw getError({
       message: "Unauthorized",
       statusCode: 401,
@@ -150,6 +160,11 @@ export async function updatePostById(req, res) {
   }
 
   const result = await post.save();
+
+  getSocket().emit("posts", {
+    action: "update",
+    post: result,
+  });
 
   return res.status(200).json({
     message: "Post updated succcessfully!",
@@ -172,11 +187,14 @@ export async function deletePostById(req, res) {
 
   const { postId } = req.params;
 
-  const post = await PostModel.findByIdAndDelete(postId);
+  const post = await PostModel.findByIdAndDelete(postId).populate(
+    "author",
+    "_id name email"
+  );
   if (!isEmptyObject(post)) {
     if (!isNullOrUndefined(post.image)) deleteImage(post.image);
 
-    if (post.author._id !== loggedUser._id)
+    if (post.author._id.toString() !== loggedUser._id.toString())
       throw getError({
         message: "Unauthorized",
         statusCode: 401,
@@ -185,6 +203,11 @@ export async function deletePostById(req, res) {
           authorId: post.author._id,
         },
       });
+
+    getSocket().emit("posts", {
+      action: "delete",
+      post,
+    });
 
     return res.status(200).json({
       message: "Post deleted succcessfully!",
