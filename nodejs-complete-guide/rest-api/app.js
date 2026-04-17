@@ -64,6 +64,18 @@ app.use(
   graphqlHTTP({
     schema: graphqlSchema,
     rootValue: graphqlResolver,
+    formatError: (error) => {
+      if (!error.originalError) return error;
+      else {
+        const newError = {
+          message: error.message || "Server side error",
+          code: error.originalError.statusCode,
+          payload: error.originalError.payload,
+        };
+
+        return newError;
+      }
+    },
   })
 );
 

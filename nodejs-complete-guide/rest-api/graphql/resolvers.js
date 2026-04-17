@@ -1,4 +1,5 @@
 import { hash } from "bcryptjs";
+import validator from "validator";
 
 import { UserModel } from "../models/user.js";
 import { getError, isEmptyObject } from "../utils/jsUtils.js";
@@ -6,6 +7,25 @@ import { getError, isEmptyObject } from "../utils/jsUtils.js";
 const graphqlResolver = {
   createUser: async (args, req) => {
     const { email, name, password } = args.userInput;
+    const errors = [];
+
+    if (!validator.isEmail(email)) errors.push("Invalid Email");
+
+    if (
+      validator.isEmpty(password) ||
+      !validator.isLength(password, {
+        min: 5,
+      })
+    )
+      errors.push("Invalid password");
+
+    if (errors.length > 0)
+      throw getError({
+        message: "Invalid Input",
+        payload: {
+          errors,
+        },
+      });
 
     const user = await UserModel.findOne({
       email,
