@@ -1,10 +1,13 @@
+import { hashSync } from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
+import { graphqlHTTP } from "express-graphql";
 import mongoose from "mongoose";
 import multer from "multer";
 
-import { hashSync } from "bcryptjs";
 import { DUMMY_POSTS, DUMMY_USERS } from "./data/dummyData.js";
+import { graphqlResolver } from "./graphql/resolvers.js";
+import { graphqlSchema } from "./graphql/schema.js";
 import { PostModel } from "./models/posts.js";
 import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
@@ -55,6 +58,14 @@ app.use((req, res, next) => {
 
 app.use("/feed", feedRoutes);
 app.use("/auth", userRoutes);
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolver,
+  })
+);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;
