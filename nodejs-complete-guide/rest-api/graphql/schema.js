@@ -7,6 +7,12 @@ const graphqlSchema = buildSchema(`
     password: String!
   }
 
+  input CreatePostInput {
+    title: String!
+    content: String!
+    imageUrl: String!
+  }
+
   type Post {
     _id: ID!
     title: String!
@@ -33,6 +39,7 @@ const graphqlSchema = buildSchema(`
   
   type RootMutation {
     createUser(userInput: CreateUserInput): User!
+    createPost(postInput: CreatePostInput): Post!
   }
 
   type RootQuery {

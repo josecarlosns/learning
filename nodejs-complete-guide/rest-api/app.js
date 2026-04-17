@@ -8,6 +8,7 @@ import multer from "multer";
 import { DUMMY_POSTS, DUMMY_USERS } from "./data/dummyData.js";
 import { graphqlResolver } from "./graphql/resolvers.js";
 import { graphqlSchema } from "./graphql/schema.js";
+import { checkAuthOptional } from "./middleware/auth.js";
 import { PostModel } from "./models/posts.js";
 import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 app.use("/feed", feedRoutes);
 app.use("/auth", userRoutes);
 
+app.use(checkAuthOptional);
 app.use(
   "/graphql",
   graphqlHTTP({
