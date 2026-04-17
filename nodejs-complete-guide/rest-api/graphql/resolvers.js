@@ -1,8 +1,31 @@
+import { hash } from "bcryptjs";
+
+import { UserModel } from "../models/user.js";
+import { getError, isEmptyObject } from "../utils/jsUtils.js";
+
 const graphqlResolver = {
-  hello: () => {
+  createUser: async (args, req) => {
+    const { email, name, password } = args.userInput;
+
+    const user = await UserModel.findOne({
+      email,
+    });
+
+    if (!isEmptyObject)
+      throw getError({
+        message: "User already exists",
+      });
+
+    const hashPwd = await hash(password, 12);
+
+    const newUser = new UserModel({ email, name, password: hashPwd });
+
+    const createdUser = (await newUser.save()).toJSON();
+
     return {
-      text: "Hello world!",
-      views: 100,
+      ...createdUser,
+      _id: createdUser._id.toString(),
+      password: undefined,
     };
   },
 };
