@@ -25,13 +25,18 @@ const graphqlSchema = buildSchema(`
     status: String!
     posts: [Post!]!
   }
+
+  type AuthData {
+    token: String!
+    userId: String!
+  }
   
   type RootMutation {
     createUser(userInput: CreateUserInput): User!
   }
 
   type RootQuery {
-    hello: String
+    login(email: String!, password: String!): AuthData!
   }
   
   schema {
