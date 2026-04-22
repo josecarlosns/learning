@@ -282,10 +282,9 @@ const graphqlResolver = {
       });
 
     const { userId } = req;
-    const user = await UserModel.findById(userId).populate(
-      "posts",
-      "title content"
-    );
+    const user = await UserModel.findById(userId)
+      .populate("posts", "title content")
+      .select({ password: 0 });
 
     if (isEmptyObject(user))
       throw getError({
@@ -297,6 +296,35 @@ const graphqlResolver = {
       });
 
     return user.toJSON();
+  },
+
+  updateStatus: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const { userId } = req;
+    const user = await UserModel.findById(userId)
+      .populate("posts", "title content")
+      .select({ password: 0 });
+
+    if (isEmptyObject(user))
+      throw getError({
+        message: "User not found",
+        statusCode: 404,
+        payload: {
+          userId,
+        },
+      });
+
+    const { status } = args;
+    user.status = status;
+
+    const updatedUser = await user.save();
+
+    return updatedUser.toJSON();
   },
 };
 
