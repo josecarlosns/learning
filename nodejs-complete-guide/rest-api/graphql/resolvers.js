@@ -98,6 +98,12 @@ const graphqlResolver = {
   },
 
   createPost: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
     const { title, content, imageUrl } = args.postInput;
     const { userId } = req;
     const errors = [];
@@ -106,8 +112,6 @@ const graphqlResolver = {
       errors.push("Invalid title");
     if (validator.isEmpty(content) || !validator.isLength(content, { min: 5 }))
       errors.push("Invalid content");
-
-    if (validator.isEmpty(userId)) errors.push("Unauthorized");
 
     if (errors.length > 0)
       throw getError({
@@ -135,6 +139,9 @@ const graphqlResolver = {
       author: user._id,
     });
     const createdPost = await newPost.save();
+
+    user.posts.push(createdPost._id);
+    await user.save();
 
     return createdPost.toJSON();
   },
