@@ -13,6 +13,12 @@ const graphqlSchema = buildSchema(`
     imageUrl: String!
   }
 
+  input UpdatePostInput {
+    title: String
+    content: String
+    imageUrl: String
+  }
+
   type Post {
     _id: ID!
     title: String!
@@ -45,6 +51,7 @@ const graphqlSchema = buildSchema(`
   type RootMutation {
     createUser(userInput: CreateUserInput): User!
     createPost(postInput: CreatePostInput): Post!
+    updatePost(id: ID!, updatePostInput: UpdatePostInput): Post!
   }
 
   type RootQuery {

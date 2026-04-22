@@ -4,7 +4,7 @@ import validator from "validator";
 
 import { PostModel } from "../models/posts.js";
 import { UserModel } from "../models/user.js";
-import { getError, isEmptyObject } from "../utils/jsUtils.js";
+import { getError, isEmptyObject, isEmptyString } from "../utils/jsUtils.js";
 
 const graphqlResolver = {
   createUser: async (args, req) => {
@@ -195,6 +195,43 @@ const graphqlResolver = {
       });
 
     return post.toJSON();
+  },
+
+  updatePost: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const { id, updatePostInput } = args;
+    const { title, content, imageUrl } = updatePostInput;
+
+    const post = await PostModel.findById(id).populate(
+      "author",
+      "_id name email"
+    );
+    if (isEmptyObject(post))
+      throw getError({
+        message: "Post not found",
+        statusCode: 404,
+        payload: {
+          id,
+        },
+      });
+    if (post.author._id.toString() !== req.userId.toString())
+      throw getError({
+        message: "Unauthorized",
+        statusCode: 401,
+      });
+
+    if (!isEmptyString(title)) post.title = title;
+    if (!isEmptyString(content)) post.content = content;
+    if (!isEmptyString(imageUrl)) post.imageUrl = imageUrl;
+
+    const updatedPost = await post.save();
+
+    return updatedPost.toJSON();
   },
 };
 
