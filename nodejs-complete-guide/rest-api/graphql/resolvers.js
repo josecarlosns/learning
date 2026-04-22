@@ -233,6 +233,38 @@ const graphqlResolver = {
 
     return updatedPost.toJSON();
   },
+
+  deletePost: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const { id } = args;
+
+    const post = await PostModel.findById(id).populate(
+      "author",
+      "_id name email"
+    );
+    if (isEmptyObject(post))
+      throw getError({
+        message: "Post not found",
+        statusCode: 404,
+        payload: {
+          id,
+        },
+      });
+    if (post.author._id.toString() !== req.userId.toString())
+      throw getError({
+        message: "Unauthorized",
+        statusCode: 401,
+      });
+
+    const deletedPost = await post.deleteOne();
+
+    return post.toJSON();
+  },
 };
 
 export { graphqlResolver };

@@ -52,6 +52,7 @@ const graphqlSchema = buildSchema(`
     createUser(userInput: CreateUserInput): User!
     createPost(postInput: CreatePostInput): Post!
     updatePost(id: ID!, updatePostInput: UpdatePostInput): Post!
+    deletePost(id: ID!): Post!
   }
 
   type RootQuery {
