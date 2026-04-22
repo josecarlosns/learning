@@ -59,6 +59,7 @@ const graphqlSchema = buildSchema(`
     login(email: String!, password: String!): AuthData!
     posts(page: Int, limit: Int): GetPostData!
     post(id: ID!): Post!
+    user: User!
   }
   
   schema {

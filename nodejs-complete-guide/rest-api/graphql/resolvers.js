@@ -273,6 +273,31 @@ const graphqlResolver = {
 
     return post.toJSON();
   },
+
+  user: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const { userId } = req;
+    const user = await UserModel.findById(userId).populate(
+      "posts",
+      "title content"
+    );
+
+    if (isEmptyObject(user))
+      throw getError({
+        message: "User not found",
+        statusCode: 404,
+        payload: {
+          userId,
+        },
+      });
+
+    return user.toJSON();
+  },
 };
 
 export { graphqlResolver };
