@@ -145,6 +145,26 @@ const graphqlResolver = {
 
     return createdPost.toJSON();
   },
+
+  posts: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const totalPosts = await PostModel.find().countDocuments();
+    const posts = await PostModel.find()
+      .sort({ createdAt: -1 })
+      .populate("author", " _id name email");
+
+    const result = {
+      totalPosts,
+      posts: posts.map((post) => post.toJSON()),
+    };
+
+    return result;
+  },
 };
 
 export { graphqlResolver };

@@ -17,7 +17,7 @@ const graphqlSchema = buildSchema(`
     _id: ID!
     title: String!
     content: String!
-    imageUrl: String!
+    imageUrl: String
     author: User!
     createdAt: String!
     updatedAt: String!
@@ -36,6 +36,11 @@ const graphqlSchema = buildSchema(`
     token: String!
     userId: String!
   }
+
+  type GetPostData {
+    posts: [Post!]!
+    totalPosts: Int!
+  }
   
   type RootMutation {
     createUser(userInput: CreateUserInput): User!
@@ -44,6 +49,7 @@ const graphqlSchema = buildSchema(`
 
   type RootQuery {
     login(email: String!, password: String!): AuthData!
+    posts: GetPostData!
   }
   
   schema {
