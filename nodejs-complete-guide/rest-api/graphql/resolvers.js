@@ -153,9 +153,14 @@ const graphqlResolver = {
         code: 401,
       });
 
+    const { page, limit } = args;
+    const skip = ((page || 1) - 1) * (limit || 10);
+
     const totalPosts = await PostModel.find().countDocuments();
     const posts = await PostModel.find()
       .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
       .populate("author", " _id name email");
 
     const result = {

@@ -49,7 +49,7 @@ const graphqlSchema = buildSchema(`
 
   type RootQuery {
     login(email: String!, password: String!): AuthData!
-    posts: GetPostData!
+    posts(page: Int, limit: Int): GetPostData!
   }
   
   schema {
