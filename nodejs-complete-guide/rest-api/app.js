@@ -1,16 +1,13 @@
-import { hashSync } from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import mongoose from "mongoose";
 import multer from "multer";
 
-import { DUMMY_POSTS, DUMMY_USERS } from "./data/dummyData.js";
+import { deleteImage } from "./controllers/utils.js";
 import { graphqlResolver } from "./graphql/resolvers.js";
 import { graphqlSchema } from "./graphql/schema.js";
 import { checkAuthOptional } from "./middleware/auth.js";
-import { PostModel } from "./models/posts.js";
-import { UserModel } from "./models/user.js";
 import { feedRoutes } from "./routes/feed.js";
 import { userRoutes } from "./routes/user.js";
 import { initSocket } from "./socket.js";
@@ -60,6 +57,25 @@ app.use((req, res, next) => {
 app.use("/feed", feedRoutes);
 app.use("/auth", userRoutes);
 
+app.put("/post-image", (req, res, next) => {
+  if (!req.file) {
+    return res.status(200).json({
+      message: "No file provided!",
+    });
+  }
+
+  if (req.body.oldPath) {
+    deleteImage(req.body.oldPath);
+  }
+
+  return res.status(201).json({
+    message: "Image sent successfully",
+    payload: {
+      filePath: req.file.path,
+    },
+  });
+});
+
 app.use(checkAuthOptional);
 app.use(
   "/graphql",
@@ -96,31 +112,31 @@ mongoose
     "mongodb://admin:pass123@localhost:27017/restapidb?authSource=admin&directConnection=true"
   )
   .then(async () => {
-    await PostModel.deleteMany();
-    await UserModel.deleteMany();
+    // await PostModel.deleteMany();
+    // await UserModel.deleteMany();
 
-    const users = DUMMY_USERS.map((user) => {
-      const { password } = user;
-      const hashedPassword = hashSync(password, 12);
-      const newUser = new UserModel({
-        ...user,
-        password: hashedPassword,
-        status: "NEW",
-      });
+    // const users = DUMMY_USERS.map((user) => {
+    //   const { password } = user;
+    //   const hashedPassword = hashSync(password, 12);
+    //   const newUser = new UserModel({
+    //     ...user,
+    //     password: hashedPassword,
+    //     status: "NEW",
+    //   });
 
-      return newUser;
-    });
-    await UserModel.bulkSave(users);
+    //   return newUser;
+    // });
+    // await UserModel.bulkSave(users);
 
-    const posts = DUMMY_POSTS.map((post) => {
-      const { author } = post;
-      const authorUser = users.find((user) => user.name === author);
+    // const posts = DUMMY_POSTS.map((post) => {
+    //   const { author } = post;
+    //   const authorUser = users.find((user) => user.name === author);
 
-      const newPost = new PostModel({ ...post, author: authorUser });
+    //   const newPost = new PostModel({ ...post, author: authorUser });
 
-      return newPost;
-    });
-    await PostModel.bulkSave(posts);
+    //   return newPost;
+    // });
+    // await PostModel.bulkSave(posts);
 
     const server = app.listen(8080);
     const io = initSocket(server);

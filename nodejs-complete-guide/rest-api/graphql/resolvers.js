@@ -170,6 +170,32 @@ const graphqlResolver = {
 
     return result;
   },
+
+  post: async (args, req) => {
+    if (!req.isAuth || !req.userId)
+      throw getError({
+        message: "Not Authenticated",
+        code: 401,
+      });
+
+    const { id } = args;
+
+    const post = await PostModel.findById(id).populate(
+      "author",
+      "_id name email"
+    );
+
+    if (isEmptyObject(post))
+      throw getError({
+        message: "Post not found",
+        statusCode: 404,
+        payload: {
+          id,
+        },
+      });
+
+    return post.toJSON();
+  },
 };
 
 export { graphqlResolver };
