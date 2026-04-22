@@ -262,6 +262,14 @@ const graphqlResolver = {
       });
 
     const deletedPost = await post.deleteOne();
+    if (deletedPost.deletedCount === 1) {
+      const user = await UserModel.findById(req.userId);
+      user.posts = user.posts.filter(
+        (userPost) => userPost._id.toString() !== post._id.toString()
+      );
+
+      await user.save();
+    }
 
     return post.toJSON();
   },
